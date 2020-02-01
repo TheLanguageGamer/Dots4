@@ -8,6 +8,7 @@ def fillTemplate(name, enginePath):
 	header = """<!doctype html>
 <html>
 	<head>
+	<meta charset="utf-8"/>
 	<style>
 		html, body {
 		    height: 100%;
