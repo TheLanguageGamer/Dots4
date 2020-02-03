@@ -6,5 +6,6 @@ const ImagePaths = {
 		"Checkmark" : "images/icons/icons8-checkmark-104.png",
 		"Download" : "images/icons/icons8-download-52.png",
 		"Upload" : "images/icons/icons8-upload-52.png",
+		"Trash" : "images/icons/icons8-trash-208.png",
 	},
 };
