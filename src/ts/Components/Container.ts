@@ -1,7 +1,7 @@
 class Container {
 	
 	layout : Layout;
-	children : Component[];
+	children : Component[] = [];
 
 	constructor() {
 		this.layout = new Layout(0, 0, 0, 0, 1, 1, 0, 0);
