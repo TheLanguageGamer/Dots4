@@ -2,7 +2,7 @@
 var DEBUG_LAYOUT = false;
 
 interface GameController {
-	onKeyDown? : (e : KeyboardEvent) => void;
+	onKeyDown? : (e : KeyboardEvent) => boolean;
 	onUpdate? : (now : DOMHighResTimeStamp) => void;
 	willResize? : (screenSize : Size, cp : ContentProvider) => void;
 	didResize? : (screenSize : Size, cp : ContentProvider) => void;
@@ -143,7 +143,9 @@ class Game {
 					e.preventDefault();
 				}
 			} else if (_this.controller.onKeyDown) {
-				_this.controller.onKeyDown(e)
+				if (_this.controller.onKeyDown(e)) {
+					e.preventDefault();
+				}
 			}
 		});
 	}
