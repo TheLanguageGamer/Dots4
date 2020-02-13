@@ -13,6 +13,13 @@ class Arrow {
 		this.layout = new Layout(0, 0, 0, 0, 0, 0, 0, 0);
 	}
 
+	center() {
+		return {
+			x : this.from.x + (this.to.x - this.from.x) / 2,
+			y : this.from.y + (this.to.y - this.from.y) / 2,
+		}
+	}
+
 	private renderArced(ctx : CanvasRenderingContext2D, cp : ContentProvider) {
 
 		var headlen = Math.floor(this.lineWidth/2);
