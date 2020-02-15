@@ -67,6 +67,28 @@ function minimumDistanceToLineSegment(p : Pos, l1 : Pos, l2 : Pos) {
 	return calculateDistance(p, projection);
 }
 
+function minimumDistanceToArc(
+	p : Pos,
+	center : Pos,
+	radius : number) {
+
+	let d = calculateDistance(p, center);
+	let ret = Math.abs(d - radius);
+	console.log("distance to arc:", ret);
+	return ret;
+}
+
+function pointIntersectsArc(
+	p : Pos,
+	center : Pos,
+	startAngle : number,
+	endAngle : number) {
+
+	var angle = Math.atan2(p.y - center.y, p.x - center.x) + Math.PI*2;
+	console.log("angle", angle);
+	return angle > startAngle && angle < endAngle;
+}
+
 class Layout {
 	relativeLayout : RelativeLayout = RelativeLayout.None;
 	relative : Box = {size : {width: 0, height: 0}, position : {x: 0, y: 0}};
