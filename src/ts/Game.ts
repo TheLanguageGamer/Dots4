@@ -156,7 +156,7 @@ class Game {
 			size: {width: screenSize.width, height: screenSize.height},
 		};
 		for (let component of this.components) {
-			component.layout.doLayoutRecursive(box, component.children);
+			component.layout.doLayoutRecursive(box, component);
 		}
 	}
 	renderRecursive(components : Component[], timeMS : DOMHighResTimeStamp) {

@@ -119,7 +119,9 @@ class Game {
                 }
             }
             else if (_this.controller.onKeyDown) {
-                _this.controller.onKeyDown(e);
+                if (_this.controller.onKeyDown(e)) {
+                    e.preventDefault();
+                }
             }
         });
     }
@@ -130,7 +132,7 @@ class Game {
             size: { width: screenSize.width, height: screenSize.height },
         };
         for (let component of this.components) {
-            component.layout.doLayoutRecursive(box, component.children);
+            component.layout.doLayoutRecursive(box, component);
         }
     }
     renderRecursive(components, timeMS) {

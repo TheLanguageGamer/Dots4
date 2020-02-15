@@ -35,7 +35,7 @@ class Button implements Component {
 		this.onClick = function(e : MouseEvent) {
 			this.foreground.layout.offset.position.x = 3;
 			this.foreground.layout.offset.position.y = -3;
-			this.foreground.layout.doLayoutRecursive(this.layout.computed, this.foreground.children);
+			this.foreground.layout.doLayoutRecursive(this.layout.computed, this.foreground);
 			this.controller.onClick(e);
 			if (this.togglePaths) {
 				this.toggleIndex = (this.toggleIndex + 1) % this.togglePaths.length;
@@ -45,13 +45,13 @@ class Button implements Component {
 		this.onMouseDown = function(e : MouseEvent) {
 			this.foreground.layout.offset.position.x = 1;
 			this.foreground.layout.offset.position.y = -1;
-			this.foreground.layout.doLayoutRecursive(this.layout.computed, this.foreground.children);
+			this.foreground.layout.doLayoutRecursive(this.layout.computed, this.foreground);
 			return true;
 		}
 		this.onMouseOut = function(e : MouseEvent) {
 			this.foreground.layout.offset.position.x = 3;
 			this.foreground.layout.offset.position.y = -3;
-			this.foreground.layout.doLayoutRecursive(this.layout.computed, this.foreground.children);
+			this.foreground.layout.doLayoutRecursive(this.layout.computed, this.foreground);
 		}
 
 		this.background = new Rectangle(

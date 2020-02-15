@@ -128,34 +128,37 @@ class Layout {
     	parent : Box,
     	xInset : number,
     	yInset : number,
-    	components? : Component[]) {
+    	component : Component) {
 
     	this.doLayoutInternal(parent, xInset, yInset);
-    	if (components) {
+    	if (component.children) {
     		var childXInset = this.computed.position.x;
     		var childYInset = this.computed.position.y;
-	    	for (var component of components) {
-	    		component.layout.doLayoutRecursiveInternal(
+	    	for (var child of component.children) {
+	    		child.layout.doLayoutRecursiveInternal(
 	    			this.computed,
 	    			childXInset,
 	    			childYInset,
-	    			component.children
+	    			child
 	    		);
 	    		if (this.relativeLayout == RelativeLayout.StackVertical) {
-	    			childYInset = component.layout.bottom();
+	    			childYInset = child.layout.bottom();
 	    		} else if (this.relativeLayout == RelativeLayout.StackHorizontal) {
-	    			childXInset = component.layout.right();
+	    			childXInset = child.layout.right();
 	    		}
 	    	}
 	    }
+	    if (component.didLayout) {
+	    	component.didLayout();
+	    }
     }
-    doLayoutRecursive(parent : Box, components? : Component[]) {
+    doLayoutRecursive(parent : Box, component : Component) {
     	//assert: not RelativeLayout.StackVertical, RelativeLayout.StackHorizontal
     	this.doLayoutRecursiveInternal(
     		parent,
     		parent.position.x,
     		parent.position.y,
-    		components
+    		component
     	);
     }
 	containsPosition(x : number, y : number) {

@@ -15,9 +15,7 @@ class Rectangle {
 	}
 
 	render(ctx : CanvasRenderingContext2D, cp : ContentProvider) {
-		if (!this.layout.visible) {
-			return;
-		}
+		
 		ctx.beginPath();
 		ctx.setLineDash(this.lineDash);
 		this.lineDashOffset += this.lineDashSpeed;
