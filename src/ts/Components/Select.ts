@@ -101,6 +101,17 @@ class Select {
 		let labelCount = this.expanded ? this.options.length + 1 : 1;
 
 		if (this.expanded) {
+			
+			ctx.beginPath();
+			ctx.fillStyle = this.backgroundColor;
+			ctx.rect(
+				this.layout.computed.position.x,
+				this.layout.computed.position.y,
+				this.layout.computed.size.width,
+				this.labelHeight * labelCount
+			);
+			ctx.fill();
+
 			ctx.beginPath();
 			ctx.fillStyle = this.highlightColor;
 			ctx.rect(
@@ -161,6 +172,10 @@ class Select {
 		}
 	}
 
+	onMouseDown(e : MouseEvent) {
+		return true;
+	}
+
 	onClick(e : MouseEvent) {
 		console.log("click Select", e.offsetY);
 		if (e.offsetY <= this.layout.computed.position.y + this.labelHeight) {
@@ -174,6 +189,12 @@ class Select {
 			);
 			this.toggleExpansion();
 		}
-		return InputResponse.Sunk;
+		return InputResponse.Focused;
+	}
+
+	blur() {
+		if (this.expanded) {
+			this.toggleExpansion();
+		}
 	}
 }
