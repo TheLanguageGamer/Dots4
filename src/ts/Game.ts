@@ -131,8 +131,12 @@ class Game {
 				&& _this.mouseDownComponent.layout.isDraggable) {
 				_this.mouseDownComponent.layout.offset.position.x += e.movementX;
 				_this.mouseDownComponent.layout.offset.position.y += e.movementY;
-				_this.mouseDownComponent.layout.computed.position.x += e.movementX;
-				_this.mouseDownComponent.layout.computed.position.y += e.movementY;
+				if (_this.mouseDownComponent.clamp) {
+					_this.mouseDownComponent.clamp();
+				}
+				_this.mouseDownComponent.layout.doLayoutRecursive(
+					ZeroBox, _this.mouseDownComponent
+				);
 			}
 			if (_this.mouseDownComponent
 				&& _this.mouseDownComponent.onMouseOut
