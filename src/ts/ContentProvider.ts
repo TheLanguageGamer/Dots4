@@ -1,5 +1,5 @@
 
-var DEBUG_CONTENT_PROVIDER = false;
+var DEBUG_CONTENT_PROVIDER = true;
 
 class ContentProvider {
 	private images : Record<string, HTMLImageElement> = {};
@@ -45,6 +45,7 @@ class ContentProvider {
 		let session = this.session;
 		let _this = this;
 		image.addEventListener("load", function() {
+			console.log("loaded:", path);
 			if (_this.session != session) {
 				return;
 			}
@@ -57,6 +58,9 @@ class ContentProvider {
 			);
 			_this.needsRender = true;
 		}, false);
+		image.addEventListener("error", function(event) {
+			console.log("path:", path, "error:", event);
+		});
 		this.blits.set(path, index);
 		return index;
 	}
@@ -66,7 +70,7 @@ class ContentProvider {
 		otherCtx.putImageData(data, x, y);
 	}
 	clear() {
-		this.session += 1;
+		//this.session += 1;
     	this.context.clearRect(0, 0, 512, 512);
     	this.images = {};
 		this.blits.clear();

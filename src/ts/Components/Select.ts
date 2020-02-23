@@ -125,6 +125,7 @@ class Select {
 		}
 
 		ctx.beginPath();
+		ctx.font = this.font;
 		ctx.setLineDash([]);
 		ctx.lineWidth = this.borderWidth;
 		ctx.strokeStyle = this.borderColor;
