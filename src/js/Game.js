@@ -77,9 +77,14 @@ class Game {
             if (_this._stopped) {
                 return;
             }
-            if (_this.focusedComponent && _this.focusedComponent.blur) {
+            if (_this.focusedComponent
+                && _this.focusedComponent.blur
+                && !_this.focusedComponent.layout.containsPosition(e.offsetX, e.offsetY)) {
                 _this.focusedComponent.blur();
-            }
+            } /*else if(_this.focusedComponent
+                && _this.focusedComponent.layout.containsPosition(e.offsetX, e.offsetY)) {
+                    return;
+            }*/
             _this.focusedComponent = undefined;
             _this.mouseDownRecursive(_this.components, e);
         });
@@ -87,6 +92,7 @@ class Game {
             if (_this._stopped) {
                 return;
             }
+            _this.mouseDownComponent = undefined;
             for (var component of _this.components) {
                 if (component.onMouseUp) {
                     component.onMouseUp(e);
@@ -96,6 +102,13 @@ class Game {
         window.addEventListener('mousemove', function (e) {
             if (_this._stopped) {
                 return;
+            }
+            if (_this.mouseDownComponent
+                && _this.mouseDownComponent.layout.isDraggable) {
+                _this.mouseDownComponent.layout.offset.position.x += e.movementX;
+                _this.mouseDownComponent.layout.offset.position.y += e.movementY;
+                _this.mouseDownComponent.layout.computed.position.x += e.movementX;
+                _this.mouseDownComponent.layout.computed.position.y += e.movementY;
             }
             if (_this.mouseDownComponent
                 && _this.mouseDownComponent.onMouseOut
@@ -171,17 +184,20 @@ class Game {
     }
     mouseDownRecursive(components, e) {
         for (let component of components) {
-            if (component.onMouseDown
-                && component.layout.containsPosition(e.offsetX, e.offsetY)
-                && component.onMouseDown(e)) {
+            if (component.children) {
+                if (this.mouseDownRecursive(component.children, e)) {
+                    return true;
+                }
+            }
+            if (component.layout.containsPosition(e.offsetX, e.offsetY)
+                && ((component.onMouseDown && component.onMouseDown(e))
+                    || component.layout.isDraggable)) {
                 this.mouseDownComponent = component;
                 this.focusedComponent = component;
-                break;
-            }
-            if (component.children) {
-                this.mouseDownRecursive(component.children, e);
+                return true;
             }
         }
+        return false;
     }
     stop() { this._stopped = true; }
     start() {

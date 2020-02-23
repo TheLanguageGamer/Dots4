@@ -26,6 +26,7 @@ class TestBootstrapper {
 			0, 0, 320, 20,
 			0, 0, 300, 500
 		);
+		rectLayout2.isDraggable = true;
 		let rect2 = new Rectangle(rectLayout2);
 
 		let textLayout2 = new Layout(
