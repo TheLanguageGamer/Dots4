@@ -13,6 +13,17 @@ interface Box {
 	position : Pos
 }
 
+var ZeroBox : Box = {
+	size : {
+		width : 0,
+		height : 0,
+	},
+	position : {
+		x : 0,
+		y : 0,
+	},
+}
+
 enum RelativeLayout {
 	None = 0,
 	StackVertical,
@@ -98,6 +109,7 @@ class Layout {
 	fixedAspect : boolean = false;
 	visible : boolean = true;
 	computed : Box = {size : {width: 0, height: 0}, position : {x: 0, y: 0}};
+	isDraggable : boolean = false;
 
 	doLayout(parent : Box) {
 		this.doLayoutInternal(

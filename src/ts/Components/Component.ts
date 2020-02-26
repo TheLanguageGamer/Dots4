@@ -16,6 +16,7 @@ interface Component {
 	onMouseOut? : (e : MouseEvent) => void;
 	onKeyDown? : (e : KeyboardEvent) => boolean;
 	didLayout? : () => void;
+	clamp? : () => void;
 	blur? : () => void;
 
 	layout : Layout

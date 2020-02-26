@@ -65,12 +65,17 @@ class Select {
         let labelCount = this.expanded ? this.options.length + 1 : 1;
         if (this.expanded) {
             ctx.beginPath();
+            ctx.fillStyle = this.backgroundColor;
+            ctx.rect(this.layout.computed.position.x, this.layout.computed.position.y, this.layout.computed.size.width, this.labelHeight * labelCount);
+            ctx.fill();
+            ctx.beginPath();
             ctx.fillStyle = this.highlightColor;
             ctx.rect(this.layout.computed.position.x, this.layout.computed.position.y
                 + this.labelHeight * (this.selectedIndex + 1), this.layout.computed.size.width, this.labelHeight);
             ctx.fill();
         }
         ctx.beginPath();
+        ctx.font = this.font;
         ctx.setLineDash([]);
         ctx.lineWidth = this.borderWidth;
         ctx.strokeStyle = this.borderColor;
@@ -98,6 +103,9 @@ class Select {
             this.layout.computed.size.height = this.labelHeight;
         }
     }
+    onMouseDown(e) {
+        return true;
+    }
     onClick(e) {
         console.log("click Select", e.offsetY);
         if (e.offsetY <= this.layout.computed.position.y + this.labelHeight) {
@@ -109,7 +117,12 @@ class Select {
             this.controller.onSelectionChanged(this.selectedIndex, this.options[this.selectedIndex]);
             this.toggleExpansion();
         }
-        return InputResponse.Sunk;
+        return InputResponse.Focused;
+    }
+    blur() {
+        if (this.expanded) {
+            this.toggleExpansion();
+        }
     }
 }
 //# sourceMappingURL=Select.js.map
