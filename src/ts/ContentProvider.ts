@@ -18,9 +18,10 @@ class ContentProvider {
 		}
 		return this.images[path];
 	}
+
 	createImageBlit(path : string, size : Size) : number {
 		let preexisting = this.blits.get(path);
-		if (preexisting) {
+		if (preexisting !== undefined) {
 			return preexisting;
 		}
 		let image = this.getImage(path);
