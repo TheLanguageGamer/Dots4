@@ -1,5 +1,5 @@
 "use strict";
-var DEBUG_CONTENT_PROVIDER = true;
+var DEBUG_CONTENT_PROVIDER = false;
 class ContentProvider {
     constructor() {
         this.images = {};
@@ -28,7 +28,7 @@ class ContentProvider {
     }
     createImageBlit(path, size) {
         let preexisting = this.blits.get(path);
-        if (preexisting) {
+        if (preexisting !== undefined) {
             return preexisting;
         }
         let image = this.getImage(path);
@@ -72,7 +72,7 @@ class ContentProvider {
         otherCtx.putImageData(data, x, y);
     }
     clear() {
-        //this.session += 1;
+        this.session += 1;
         this.context.clearRect(0, 0, 512, 512);
         this.images = {};
         this.blits.clear();

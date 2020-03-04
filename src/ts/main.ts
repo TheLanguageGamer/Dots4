@@ -3,8 +3,7 @@ let $loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
 class TestBootstrapper {
 	game : Game;
 
-	constructor(container : HTMLElement) {
-		this.game = new Game(container, {});
+	textComponentTest() {
 
 		let rectLayout1 = new Layout(
 			0, 0, 20, 20,
@@ -89,6 +88,34 @@ class TestBootstrapper {
 			},
 		});
 		this.game.components.push(select);
+	}
+
+	graphXYTest() {
+
+		let graph = new XYGraph(
+			new Layout(
+				0, 0, 20, 20,
+				0, 0, 300, 300
+			),
+			function(x : number) {
+				return x*x*x;
+			}
+		);
+
+		let rectLayout1 = new Layout(
+			0, 0, 400, 400,
+			0, 0, 300, 300
+		);
+		let rect1 = new Rectangle(rectLayout1);
+
+		this.game.components.push(graph);
+		this.game.components.push(rect1);
+	}
+
+	constructor(container : HTMLElement) {
+		this.game = new Game(container, {});
+
+		this.graphXYTest();
 
 		this.game.doLayout();
 	}

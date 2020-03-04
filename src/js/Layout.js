@@ -1,4 +1,14 @@
 "use strict";
+var ZeroBox = {
+    size: {
+        width: 0,
+        height: 0,
+    },
+    position: {
+        x: 0,
+        y: 0,
+    },
+};
 var RelativeLayout;
 (function (RelativeLayout) {
     RelativeLayout[RelativeLayout["None"] = 0] = "None";
