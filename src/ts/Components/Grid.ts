@@ -11,7 +11,6 @@ class Grid implements Component {
 	gridSize : Size;
 	grid : string[][][];
 	controller : GridController;
-	//tileSize : number = 0;
 	downAt : Pos = {x : -1, y : -1};
 	color = Constants.Colors.VeryLightGrey;
 
@@ -141,11 +140,29 @@ class Grid implements Component {
 		layout.setUpperLeft(ul.x, ul.y);
 		layout.setLowerRight(lr.x, lr.y);
 	}
-	clipRectangleToCoordinates(layout : Layout) {
+	clipRectangleToCoordinates(layout : Layout, fudgeFactor : number) {
+		let tileSize = this.computeTileSize();
+
 		let ulX = layout.getUpperLeftX();
 		let ulY = layout.getUpperLeftY();
 		let lrX = layout.getLowerRightX();
 		let lrY = layout.getLowerRightY();
+
+		if (lrX > ulX) {
+			ulX -= tileSize*fudgeFactor;
+			lrX += tileSize*fudgeFactor;
+		} else {
+			ulX += tileSize*fudgeFactor;
+			lrX -= tileSize*fudgeFactor;
+		}
+
+		if (lrY > ulY) {
+			ulY -= tileSize*fudgeFactor;
+			lrY += tileSize*fudgeFactor;
+		} else {
+			ulY += tileSize*fudgeFactor;
+			lrY -= tileSize*fudgeFactor;
+		}
 
 		let ulI = this.getCoordinateForXPosition(ulX);
 		let ulJ = this.getCoordinateForYPosition(ulY);
@@ -227,14 +244,14 @@ class Grid implements Component {
 		}
 		const x = this.getCoordinateForXPosition(e.offsetX);
 		const y = this.getCoordinateForYPosition(e.offsetY);
+		if (this.controller.onMouseMove) {
+			this.controller.onMouseMove(x, y, e);
+		}
 		if (x < 0
 			|| y < 0
 			|| x >= this.gridSize.width
 			|| y >= this.gridSize.height) {
 			return false;
-		}
-		if (this.controller.onMouseMove) {
-			this.controller.onMouseMove(x, y, e);
 		}
 		if (this.controller.onSelect
 			&& (this.downAt.x != x || this.downAt.y != y)) {
@@ -252,12 +269,7 @@ class Grid implements Component {
 		}
 		const x = this.getCoordinateForXPosition(e.offsetX);
 		const y = this.getCoordinateForYPosition(e.offsetY);
-		if (x < 0
-			|| y < 0
-			|| x >= this.gridSize.width
-			|| y >= this.gridSize.height) {
-			return false;
-		}
+
 		this.controller.onMouseUp(x, y, e);
 		return true;
 	}
