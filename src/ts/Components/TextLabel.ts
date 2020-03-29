@@ -20,6 +20,10 @@ class TextLabel {
 		this.font = fontSize.toString() + "px monospace";
 	}
 
+	getFontSize() {
+		return this.fontSize;
+	}
+
 	render(ctx : CanvasRenderingContext2D, cp : ContentProvider) {
 		if (!this.layout.visible) {
 			return;
