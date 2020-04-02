@@ -6,6 +6,8 @@ class TextLabel {
 	private font : string = "20px monospace";
 	private fontSize : number = 12;
 	fillStyle : string = Constants.Colors.LightGrey;
+	onMouseMove? : (e : MouseEvent) => boolean;
+	onMouseOut? : (e : MouseEvent) => void;
 
 	constructor(layout : Layout, text? : string) {
 		if (text) {
